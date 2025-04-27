@@ -9,7 +9,6 @@
   <ItemGroup>
     <Folder Include="Contract\" />
     <Folder Include="Exptions\" />
-    <Folder Include="Models\" />
   </ItemGroup>
 
 </Project>
