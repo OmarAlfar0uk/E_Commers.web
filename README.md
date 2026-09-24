@@ -83,7 +83,7 @@ flowchart TD
    cd E_Commers.web
    ```
 
-2. **Configure & Launch:**
+2. **Build & Launch:**
    ```bash
    dotnet run --project E-Commers.web02/E-Commers.web02.csproj
    ```
