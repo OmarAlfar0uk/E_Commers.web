@@ -1,106 +1,65 @@
-<div align="center">
+# E_Commers.web
 
-# 🛒 E_Commers.web
-### Scalable E-Commerce Web API Solution Architected with Clean Onion Architecture
+![.NET](https://img.shields.io/badge/.NET-8.0-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)
+![C#](https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white)
+![Entity Framework Core](https://img.shields.io/badge/EF_Core-8.0-3FA037?style=for-the-badge&logo=nuget&logoColor=white)
+![SQL Server](https://img.shields.io/badge/SQL_Server-CC2927?style=for-the-badge&logo=microsoft-sql-server&logoColor=white)
 
-[![.NET 8](https://img.shields.io/badge/.NET-8.0-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)](https://dotnet.microsoft.com/)
-[![C#](https://img.shields.io/badge/C%23-12-239120?style=for-the-badge&logo=csharp&logoColor=white)](https://learn.microsoft.com/en-us/dotnet/csharp/)
-[![Clean Architecture](https://img.shields.io/badge/Architecture-Clean%20%26%20Onion-blue?style=for-the-badge&logo=diagram-project&logoColor=white)](#-system-architecture)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellowgreen?style=for-the-badge)](LICENSE)
-[![Author](https://img.shields.io/badge/Author-Omar%20Alfarouk-orange?style=for-the-badge&logo=github&logoColor=white)](https://github.com/OmarAlfar0uk)
+A modern E-commerce Web API engineered with .NET 8, implementing Clean Architecture/Onion Architecture. The system provides a scalable product catalog featuring product brands, types, and generic base entities following Domain-Driven Design concepts.
 
-<p align="center">
-  <a href="#-key-features">Key Features</a> •
-  <a href="#-system-architecture">System Architecture</a> •
-  <a href="#-tech-stack">Tech Stack</a> •
-  <a href="#-getting-started">Getting Started</a> •
-  <a href="#-author">Author</a>
-</p>
-
-</div>
-
----
-
-## 📌 Executive Overview
-
-**E_Commers.web** is a robust e-commerce backend built with ASP.NET Core. Structured around Clean Architecture and the Onion paradigm, it decouples core business domain models and logic from infrastructure, database technologies, and Web presentation components.
-
-> [!NOTE]
-> Structured into isolated architectural layers: **Core.DomainLayer**, **Core.ServiceAbstraction**, **Core.Service**, **Infrastructure.Persistence**, and **Infrastructure.Presentation**.
-
----
-
-## ✨ Key Features
-
-| ⚡ Feature | 💡 Description | 🛠 Engineering Detail |
-|---|---|---|
-| **📦 Product Catalog Management** | Comprehensive catalog with product specifications and pricing | Relational entity mappings via EF Core |
-| **🛡️ Architectural Integrity** | Decoupled dependencies following SOLID principles | Domain layer has zero third-party dependencies |
-| **🗄️ Persistence Abstraction** | Generic repository abstractions with Unit of Work pattern | Swappable database layer |
-| **🚀 Extensible Web API** | Standardized JSON response envelopes and RESTful endpoints | ASP.NET Core Web API with Swagger |
-
----
-
-## 🏛 System Architecture
+## 🏗️ Architecture
 
 ```mermaid
-flowchart TD
-    subgraph Host["🌐 Host API"]
-        Web["E-Commers.web Host<br/>(Program.cs, DI Container)"]
-    end
-
-    subgraph Layers["🏛️ Architectural Layers"]
-        Presentation["Infrastructure.Presentation<br/>(Controllers)"]
-        Service["Core.Service<br/>(Business Services)"]
-        ServiceAbs["Core.ServiceAbstraction<br/>(Interfaces)"]
-        Domain["Core.DomainLayer<br/>(Product, BaseEntity)"]
-        Persistence["Infrastructure.Persistence<br/>(DbContext, Migrations)"]
-    end
-
-    Web --> Presentation
-    Presentation --> ServiceAbs
-    Service --> ServiceAbs
-    Service --> Domain
-    Persistence --> Domain
+graph TD
+    P[Infrastructure/Presentation] --> SA[Core/ServiceAbstraction]
+    SA --> D[Core/DomainLayer]
+    S[Core/Service] --> SA
+    S --> D
+    I[Infrastructure/Persistence] --> D
+    H[E-Commers.web02 Host] --> P
+    H --> I
+    H --> S
 ```
 
----
+## 📂 Project Structure
 
-## ⚡ Tech Stack
-
-- **Framework:** .NET 8 / C# 12
-- **Architecture:** Clean Onion Architecture
-- **ORM & Data:** Entity Framework Core / Microsoft SQL Server
-- **Tooling:** Swagger / OpenAPI, Visual Studio
-
----
+| Layer | Project | Description |
+|---|---|---|
+| **Domain** | `Core/DomainLayer` | Entities (`BaseEntity`, `Product`, `ProductBrand`, `ProductType`). |
+| **Service Interfaces** | `Core/ServiceAbstraction` | Abstractions and contracts for domain services. |
+| **Service Implementation** | `Core/Service` | Business logic and use case implementations. |
+| **Data Access** | `Infrastructure/Persistence` | EF Core integrations targeting SQL Server. |
+| **API** | `Infrastructure/Presentaion` | Controller logic separating routing from business rules. |
+| **Shared** | `Shared/Shared` | Cross-cutting concerns and shared models. |
+| **Host** | `E-Commers.web02` | Startup, configuration, and API bootstrapping. |
 
 ## 🚀 Getting Started
 
-1. **Clone repository:**
-   ```bash
-   git clone https://github.com/OmarAlfar0uk/E_Commers.web.git
-   cd E_Commers.web
-   ```
+### Prerequisites
+- [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
+- SQL Server
 
-2. **Build & Launch:**
-   ```bash
-   dotnet run --project E-Commers.web02/E-Commers.web02.csproj
-   ```
+### Installation & Execution
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/OmarAlfar0uk/E_Commers.web.git
+
+# 2. Navigate to the project root
+cd E_Commers.web
+
+# 3. Restore dependencies
+dotnet restore
+
+# 4. Run the application
+dotnet run --project E-Commers.web02
+```
 
 ---
 
 ## 👨‍💻 Author
 
-**Omar Alfarouk**  
-*Full-Stack .NET & Software Engineer*  
-
-- 🌐 **GitHub:** [@OmarAlfar0uk](https://github.com/OmarAlfar0uk)
-- 💼 **LinkedIn:** [omar-alfarouk](https://www.linkedin.com/in/omar-alfarouk-252471251/)
-- 📧 **Email:** [omaralfarouk646@gmail.com](mailto:omaralfarouk646@gmail.com)
-
----
-
-<div align="center">
-  <sub>Built with ❤️ by Omar Alfarouk. Licensed under the <a href="LICENSE">MIT License</a>.</sub>
-</div>
+**Omar Alfarouk**
+- GitHub: [OmarAlfar0uk](https://github.com/OmarAlfar0uk)
+- LinkedIn: [omar-alfarouk-252471251](https://www.linkedin.com/in/omar-alfarouk-252471251/)
+- Email: [omaralfarouk646@gmail.com](mailto:omaralfarouk646@gmail.com)
